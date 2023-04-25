@@ -1,0 +1,122 @@
+
+/*
+*
+* Advanced C Programming Masterclass: Pointers & Memory in C
+*
+* @theme Basic Algorithms
+* @brief Merge sorted arrays Funcionaly
+* @author Vlad Budnitski
+* @date 25/04/2023
+*
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#define N 5
+#define M 6
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Merge #1
+void merge2SortedArrays(int* arrayA, int* arrayB, int n, int m, int* arrayC)
+{
+    int i = 0, j = 0, k = 0;
+    while (i < N && j < M)
+    {
+        if (arrayA[i] < arrayB[j])
+        {
+            arrayC[k++] = arrayA[i++];
+        }
+        else
+        {
+            arrayC[k++] = arrayB[j++];
+        }
+
+    }
+
+    // copy all remaning elements of the array A
+    while (i < N)
+    {
+        arrayC[k] = arrayA[i];
+        i++;
+        k++;
+    }
+
+    // copy all remaning elements of the array B
+    while (j < M)
+    {
+        arrayC[k] = arrayB[j];
+        j++;
+        k++;
+    }
+
+
+}
+
+// Merge #2
+int* Twomerge2SortedArrays(int* arrayA, int* arrayB, int n, int m)
+{
+    int i = 0, j = 0, k = 0;
+
+    int* arrayC = malloc((n + m)*sizeof(int));
+
+    while (i < N && j < M)
+    {
+        if (arrayA[i] < arrayB[j])
+        {
+            arrayC[k++] = arrayA[i++];
+        }
+        else
+        {
+            arrayC[k++] = arrayB[j++];
+        }
+
+    }
+
+    // copy all remaning elements of the array A
+    while (i < N)
+    {
+        arrayC[k] = arrayA[i];
+        i++;
+        k++;
+    }
+
+    // copy all remaning elements of the array B
+    while (j < M)
+    {
+        arrayC[k] = arrayB[j];
+        j++;
+        k++;
+    }
+
+    return arrayC;
+}
+
+int main()
+{
+  
+    int arrayA[N] = {1, 3, 5, 7, 9};
+    int arrayB[M] = { 2, 4, 6,12,17,31 };
+    int arrayC[N+M];
+    int *arrayCStar;
+
+    merge2SortedArrays(arrayA, arrayB, N, M, arrayC);
+    
+    arrayCStar = Twomerge2SortedArrays(arrayA, arrayB, N, M);
+
+    for (int i = 0; i < N+M; i++)
+        printf("%d ", arrayC[i]);
+
+    puts("");
+
+    for (int i = 0; i < N + M; i++)
+        printf("%d ", arrayC[i]);
+
+    free(arrayCStar);
+
+    return 0;
+}
