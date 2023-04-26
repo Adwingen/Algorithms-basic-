@@ -1,0 +1,90 @@
+
+/*
+*
+* Advanced C Programming Masterclass: Pointers & Memory in C
+*
+* @theme Basic Algorithms
+* @brief Merge Algorithm
+* @author Vlad Budnitski
+* @date 26/04/2023
+*
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void merge(int arr[], int left[], int left_size, int right[], int right_size);
+void merge_sort(int arr[], int size);
+
+int main()
+{
+    int arr[] = { 3, 6, 1, 8, 2, 9, 5, 7, 4 };
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Unsorted array:\n");
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+
+    merge_sort(arr, size);
+
+    printf("\nSorted array:\n");
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+
+    return 0;
+}
+
+void merge(int arr[], int left[], int left_size, int right[], int right_size)
+{
+    int i = 0, j = 0, k = 0;
+
+    while (i < left_size && j < right_size) 
+    {
+        if (left[i] <= right[j])
+            arr[k++] = left[i++];
+        
+        else 
+            arr[k++] = right[j++];
+        
+    }
+
+    while (i < left_size)
+        arr[k++] = left[i++];
+    
+
+    while (j < right_size)
+        arr[k++] = right[j++];
+    
+}
+
+void merge_sort(int arr[], int size)
+{
+    if (size < 2)
+        return;
+    
+
+    int mid = size / 2;
+    int* left = malloc(mid * sizeof(int));
+    int* right = malloc((size - mid) * sizeof(int));
+
+    for (int i = 0; i < mid; i++)
+        left[i] = arr[i];
+    
+
+    for (int i = mid; i < size; i++)
+        right[i - mid] = arr[i];
+
+    merge_sort(left, mid);
+    merge_sort(right, size - mid);
+
+    merge(arr, left, mid, right, size - mid);
+
+    free(left);
+    free(right);
+}
+
