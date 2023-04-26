@@ -1,0 +1,66 @@
+
+/*
+*
+* Advanced C Programming Masterclass: Pointers & Memory in C
+*
+* @theme Basic Algorithms
+* @brief Merge in Place
+* @author Vlad Budnitski
+* @date 26/04/2023
+*
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE 5
+
+
+void merge(int arr[], int firstEnd, int secondEnd);
+void copy(int dest[], int src[], int size);
+
+int main()
+{
+    int arr[SIZE] = { 1,4,7,2,5 };
+    int firstEnd = 2, secondEnd = SIZE - 1;
+
+    merge(arr, firstEnd, secondEnd);
+
+    for (int i = 0; i < SIZE; i++)
+        printf("%d ", arr[i]);
+
+    return 0;
+}
+
+void merge(int arr[], int firstEnd, int secondEnd)
+{
+    int i = 0, j = firstEnd + 1;
+    int k = 0;
+    int temp[SIZE];
+
+    while ((i <= firstEnd) && (j <= secondEnd))
+    {
+        if (arr[i] < arr[j])
+            temp[k++] = arr[i++];
+        else // arr[j] <= arr[i]
+            temp[k++] = arr[j++];
+    }
+
+    while (i <= firstEnd)
+        temp[k++] = arr[i++];
+    while (j <= secondEnd)
+        temp[k++] = arr[j++];
+
+    copy(arr, temp, secondEnd + 1);
+}
+
+void copy(int dest[], int src[], int size)
+{
+    for (int i = 0; i < size; i++)
+        dest[i] = src[i];
+}
